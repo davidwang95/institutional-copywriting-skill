@@ -1,0 +1,12 @@
+__pycache__/
+*.pyc
+.DS_Store
+*.zip
+*.pdf
+*.png
+*.jpg
+*.jpeg
+*.ppt
+*.pptx
+private-staging/
+local-eval-results/

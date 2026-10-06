@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "cases": [
+    {
+      "id": "figures_units_periods",
+      "task": "Rewrite the source as concise institutional earnings commentary in two sentences. Preserve all reported metrics, units and periods; do not add a recommendation.",
+      "source": "Alpha reported revenue of US$1.26 billion for FY2025, up 8.0% year on year. Adjusted operating profit was US$184 million for FY2025. Free cash flow was US$97 million in H2 2025; no full-year free-cash-flow figure is provided.",
+      "invariants": [
+        "Revenue is US$1.26 billion for FY2025, not millions or a quarterly figure.",
+        "The 8.0% change is revenue growth year on year.",
+        "US$184 million is adjusted operating profit for FY2025, not reported net income.",
+        "US$97 million is free cash flow for H2 2025 only.",
+        "The source does not establish full-year free cash flow or investment attractiveness."
+      ],
+      "required_literals": ["US$1.26 billion", "FY2025", "8.0%", "US$184 million", "adjusted operating profit", "US$97 million", "H2 2025"],
+      "forbidden_literals": ["US$1.26 million", "net income of US$184 million", "FY2025 free cash flow was US$97 million", "a compelling investment"],
+      "acceptable_output": "Alpha's FY2025 revenue rose 8.0% year on year to US$1.26 billion, with adjusted operating profit of US$184 million. H2 2025 free cash flow was US$97 million; a full-year figure was not provided.",
+      "rejected_output": "Alpha's FY2025 revenue rose 8.0% to US$1.26 million, while net income of US$184 million and FY2025 free cash flow was US$97 million make it a compelling investment.",
+      "rejection_reason": "The rewrite changes the revenue unit, relabels adjusted operating profit as net income, extends a half-year cash-flow figure to the full year, and adds an unsupported investment conclusion."
+    },
+    {
+      "id": "percentage_point_change",
+      "task": "Rewrite the margin discussion as one clear sentence for a quarterly results note. Distinguish a percentage-point change from relative percentage growth.",
+      "source": "Orion's reported operating margin was 18.0% in Q1 2026 and 21.0% in Q2 2026. That is an increase of 3.0 percentage points. This source does not calculate relative percentage growth in the margin.",
+      "invariants": [
+        "The margin is reported operating margin.",
+        "The two observations are Q1 2026 at 18.0% and Q2 2026 at 21.0%.",
+        "The absolute change is 3.0 percentage points, not 3.0% relative growth.",
+        "No change in revenue, profit or annual margin is established."
+      ],
+      "required_literals": ["reported operating margin", "18.0%", "Q1 2026", "21.0%", "Q2 2026", "3.0 percentage points"],
+      "forbidden_literals": ["margin grew 3.0%", "margin increased by 3.0%", "annual margin", "revenue grew 3.0%"],
+      "acceptable_output": "Orion's reported operating margin increased by 3.0 percentage points, from 18.0% in Q1 2026 to 21.0% in Q2 2026.",
+      "rejected_output": "Orion's reported operating margin grew 3.0%, from 18.0% in Q1 2026 to 21.0% in Q2 2026.",
+      "rejection_reason": "The endpoints are retained, but a percentage-point change is presented as relative percentage growth."
+    },
+    {
+      "id": "conditional_forecast",
+      "task": "Turn the source into a compact investment-committee scenario paragraph. Retain the range, scenario status and conditions; do not turn a possible outcome into guidance.",
+      "source": "In the analyst team's upside scenario, Alpha could generate FY2027 EBITDA of €240–270 million if the new facility starts production by July 2027 and raw-material costs remain near FY2026 levels. The scenario is not management guidance. A delay would put the range at risk; the source supplies no base-case or downside EBITDA estimate.",
+      "invariants": [
+        "€240–270 million refers to FY2027 EBITDA in the analyst team's upside scenario.",
+        "The outcome is possible and conditional, not assured.",
+        "Both production starting by July 2027 and raw-material costs remaining near FY2026 levels are conditions.",
+        "A delay threatens achievement of the range.",
+        "The estimate is not management guidance and no base-case or downside estimate is available."
+      ],
+      "required_literals": ["upside scenario", "could", "FY2027 EBITDA", "€240–270 million", "July 2027", "FY2026 levels", "not management guidance"],
+      "forbidden_literals": ["will generate", "management guides", "base-case EBITDA of €240–270 million", "regardless of timing"],
+      "acceptable_output": "The analyst team's upside scenario suggests Alpha could deliver FY2027 EBITDA of €240–270 million if production begins by July 2027 and raw-material costs hold near FY2026 levels. A delay would jeopardize the range. This is not management guidance; base-case and downside estimates are unavailable.",
+      "rejected_output": "Alpha will generate FY2027 EBITDA of €240–270 million. Management guides to this range, supported by the new facility regardless of timing.",
+      "rejection_reason": "The rewrite converts an analyst's conditional upside scenario into an unconditional management forecast and removes the cost and timing dependencies."
+    },
+    {
+      "id": "estimate_attribution",
+      "task": "Rewrite the source for an institutional research update in two sentences. Identify who owns the forecast and keep the absence of management guidance clear.",
+      "source": "The Orion research team raised its FY2026 revenue estimate for Alpha from £3.9 billion to £4.2 billion after updating its model. Alpha management has not issued FY2026 revenue guidance. The research team says its estimate assumes stable currency rates; the company has not endorsed that assumption.",
+      "invariants": [
+        "The Orion research team, not Alpha management, raised the forecast.",
+        "The forecast is an FY2026 revenue estimate for Alpha.",
+        "The prior estimate is £3.9 billion and the revised estimate is £4.2 billion.",
+        "The estimate assumes stable currency rates.",
+        "Management has issued no FY2026 revenue guidance and has not endorsed the currency assumption."
+      ],
+      "required_literals": ["Orion research team", "FY2026 revenue estimate", "£3.9 billion", "£4.2 billion", "stable currency rates", "has not issued"],
+      "forbidden_literals": ["Alpha raised its guidance", "management expects £4.2 billion", "company-endorsed", "confirmed revenue"],
+      "acceptable_output": "The Orion research team raised its FY2026 revenue estimate for Alpha to £4.2 billion from £3.9 billion, assuming stable currency rates. Alpha management has not issued revenue guidance for the period or endorsed the currency assumption.",
+      "rejected_output": "Alpha raised its guidance from £3.9 billion to £4.2 billion for FY2026. Management expects £4.2 billion of confirmed revenue under a company-endorsed currency assumption.",
+      "rejection_reason": "The output falsely attributes an external model estimate and assumption to company management and misrepresents estimated revenue as confirmed."
+    },
+    {
+      "id": "quotation_integrity",
+      "task": "Write a two-sentence investor-update paragraph. Keep the direct quotation exactly as supplied and summarize its implications without strengthening it.",
+      "source": "Alpha's chief executive said, \"Demand has stabilized, but we have not yet seen a broad recovery.\" The statement was made on the Q3 2026 results call. The source contains no quantitative demand forecast.",
+      "invariants": [
+        "The quoted words are preserved exactly if presented as a direct quotation.",
+        "The speaker is Alpha's chief executive and the occasion is the Q3 2026 results call.",
+        "Stabilization does not establish that a broad recovery has occurred.",
+        "No numerical demand forecast can be inferred."
+      ],
+      "required_literals": ["Demand has stabilized, but we have not yet seen a broad recovery.", "chief executive", "Q3 2026", "no quantitative"],
+      "forbidden_literals": ["Demand has recovered", "broad recovery is underway", "demand will grow 10%"],
+      "acceptable_output": "On the Q3 2026 results call, Alpha's chief executive said, \"Demand has stabilized, but we have not yet seen a broad recovery.\" The comment signals stabilization while leaving the recovery outlook uncertain; the source provides no quantitative demand forecast.",
+      "rejected_output": "On the Q3 2026 results call, Alpha's chief executive said, \"Demand has recovered and a broad recovery is underway.\" This implies demand will grow 10% next year.",
+      "rejection_reason": "The supposed quotation changes the speaker's words and meaning, then adds an unsupported numerical forecast."
+    },
+    {
+      "id": "correlation_causation",
+      "task": "Rewrite the source as a short analytical observation for a portfolio review. Preserve the sample and association while avoiding a causal claim.",
+      "source": "Across 24 quarterly observations from 2020 through 2025, Orion's vacancy index and Alpha's wage-cost growth had a correlation of 0.62. The analysis is descriptive and does not establish that vacancies caused wage-cost growth. Other drivers were not controlled for.",
+      "invariants": [
+        "The sample contains 24 quarterly observations spanning 2020 through 2025.",
+        "The reported statistic is a correlation of 0.62 between a vacancy index and wage-cost growth.",
+        "The analysis does not establish causation or control for other drivers.",
+        "The statistic is not a 62% effect size, prediction accuracy or explained-variance claim."
+      ],
+      "required_literals": ["24 quarterly observations", "2020 through 2025", "correlation of 0.62", "does not establish", "other drivers"],
+      "forbidden_literals": ["vacancies caused", "vacancies drove", "62% of wage growth", "predicts wage growth with 62% accuracy"],
+      "acceptable_output": "Orion's vacancy index and Alpha's wage-cost growth showed a correlation of 0.62 across 24 quarterly observations from 2020 through 2025. The descriptive analysis does not establish causation, as other drivers were not controlled for.",
+      "rejected_output": "Orion's vacancy index shows that vacancies caused 62% of wage growth at Alpha between 2020 and 2025.",
+      "rejection_reason": "A descriptive correlation is converted into causation and an unsupported effect size; the sample and omitted-driver limitation are lost."
+    },
+    {
+      "id": "gross_net_benchmark",
+      "task": "Produce two sentences of performance commentary for a client letter. Preserve gross and net labels, the comparison basis and the period.",
+      "source": "The Alpha strategy returned 8.4% gross of fees and 7.1% net of fees for the six months ended 30 June 2026. Its benchmark returned 6.5% over the same period. The strategy's net excess return was 0.6 percentage points. These are period returns, not annualized returns.",
+      "invariants": [
+        "8.4% is the strategy's gross-of-fees return and 7.1% is its net-of-fees return.",
+        "6.5% is the benchmark return for the same six-month period.",
+        "Net excess return is 0.6 percentage points, not 1.9 percentage points.",
+        "The period is the six months ended 30 June 2026.",
+        "The returns are not annualized and no future outperformance is promised."
+      ],
+      "required_literals": ["8.4% gross of fees", "7.1% net of fees", "six months ended 30 June 2026", "6.5%", "0.6 percentage points", "not annualized"],
+      "forbidden_literals": ["8.4% net of fees", "net excess return of 1.9 percentage points", "annualized return of 8.4%", "will continue to outperform"],
+      "acceptable_output": "For the six months ended 30 June 2026, the Alpha strategy returned 8.4% gross of fees and 7.1% net of fees, against the benchmark's 6.5%. Net excess return was 0.6 percentage points; these period returns are not annualized.",
+      "rejected_output": "The Alpha strategy delivered an annualized return of 8.4% net of fees, with net excess return of 1.9 percentage points over the 6.5% benchmark, and will continue to outperform.",
+      "rejection_reason": "Gross returns are mislabeled as net, the gross spread is labeled net excess return, the period return is annualized without support, and future performance is promised."
+    },
+    {
+      "id": "negative_evidence_scope",
+      "task": "Rewrite the diligence finding in two concise sentences. Keep the review scope and cutoff clear; do not treat an absence of disclosure as proof that an event did not occur.",
+      "source": "A review of Orion's published exchange announcements from 1 January to 30 September 2026 found no disclosed covenant breach. The review did not cover private lender correspondence or announcements after 30 September 2026. It therefore cannot establish that no breach occurred.",
+      "invariants": [
+        "The finding is no disclosed covenant breach in the reviewed published exchange announcements.",
+        "The covered period is 1 January to 30 September 2026.",
+        "Private lender correspondence and later announcements were outside the review.",
+        "No disclosed breach is not evidence sufficient to conclude that no breach occurred."
+      ],
+      "required_literals": ["1 January to 30 September 2026", "no disclosed covenant breach", "private lender correspondence", "cannot establish"],
+      "forbidden_literals": ["Orion had no covenant breach", "fully covenant-compliant", "all lender communications", "no breach occurred"],
+      "acceptable_output": "Orion's published exchange announcements from 1 January to 30 September 2026 contained no disclosed covenant breach. Because private lender correspondence and later announcements were outside the review, the finding cannot establish whether a breach occurred.",
+      "rejected_output": "A review of all lender communications confirms Orion had no covenant breach and was fully covenant-compliant throughout 2026.",
+      "rejection_reason": "The output expands the evidence scope and time period, then converts a limited absence of disclosure into affirmative proof of compliance."
+    },
+    {
+      "id": "contradiction_and_missing_basis",
+      "task": "Prepare a brief editorial note for an analyst before publication. Identify the conflict and missing adjustment basis; do not silently choose a number or invent a reconciliation.",
+      "source": "Alpha's draft FY2025 summary table lists adjusted EBITDA of €510 million. The narrative in the same draft says FY2025 adjusted EBITDA was €540 million. Neither section explains the difference or defines the adjustments. No supporting reconciliation is included.",
+      "invariants": [
+        "The table and narrative give conflicting values for the same FY2025 adjusted EBITDA metric.",
+        "The table lists €510 million and the narrative lists €540 million.",
+        "The difference remains unresolved because there is no explanation or reconciliation.",
+        "The adjustment basis is not defined.",
+        "Neither figure can be selected as correct or relabeled as unadjusted EBITDA on the supplied evidence."
+      ],
+      "required_literals": ["FY2025 adjusted EBITDA", "€510 million", "€540 million", "unresolved", "adjustments"],
+      "forbidden_literals": ["correct figure is €540 million", "unadjusted EBITDA of €510 million", "€30 million restructuring adjustment", "reconciles to"],
+      "acceptable_output": "The draft contains an unresolved conflict in FY2025 adjusted EBITDA: the table gives €510 million, while the narrative gives €540 million. Confirm the intended figure and define the adjustments before publication; the supplied draft provides no reconciliation.",
+      "rejected_output": "Alpha's FY2025 adjusted EBITDA was €540 million, including a €30 million restructuring adjustment to unadjusted EBITDA of €510 million.",
+      "rejection_reason": "The output silently selects one value and invents both a reconciliation and an unadjusted metric to resolve inconsistent evidence."
+    },
+    {
+      "id": "slide_headline_fidelity",
+      "task": "Create one slide headline of no more than 16 words and two supporting bullets. The headline must state the strongest supported claim while preserving pipeline status; do not present the whole pipeline as contracted revenue.",
+      "source": "Orion's prospective FY2027 order pipeline totals US$2.4 billion. Signed contracts account for 40%; nonbinding discussions account for 60%. Conversion may support FY2027 revenue, subject to customer decisions and delivery execution. The source gives no FY2027 revenue forecast.",
+      "invariants": [
+        "US$2.4 billion is the prospective FY2027 order pipeline, not recognized or secured revenue.",
+        "Signed contracts represent 40% and nonbinding discussions represent 60% of that pipeline.",
+        "Potential revenue support is conditional on conversion, customer decisions and delivery execution.",
+        "No FY2027 revenue forecast is provided.",
+        "The headline must preserve the same factual boundaries as the supporting bullets."
+      ],
+      "required_literals": ["Signed contracts", "40%", "prospective FY2027 order pipeline", "US$2.4 billion", "60%", "nonbinding discussions", "customer decisions", "delivery execution"],
+      "forbidden_literals": ["secures US$2.4 billion", "US$2.4 billion in FY2027 revenue", "fully contracted", "guarantees revenue growth"],
+      "acceptable_output": "Signed contracts cover 40% of Orion's prospective FY2027 order pipeline\n\n- The US$2.4 billion pipeline comprises 40% signed contracts and 60% nonbinding discussions.\n- Conversion may support FY2027 revenue, subject to customer decisions and delivery execution; no revenue forecast is provided.",
+      "rejected_output": "Orion secures US$2.4 billion in FY2027 revenue\n\n- The fully contracted pipeline guarantees revenue growth.\n- Some customer discussions remain open, with delivery execution still required.",
+      "rejection_reason": "The headline and first bullet turn a partly nonbinding prospective order pipeline into secured revenue and guaranteed growth. A caveat in a later bullet does not repair the headline."
+    }
+  ]
+}
